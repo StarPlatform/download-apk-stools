@@ -4,6 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Download STools v2.5.0</title>
+
+<link rel="icon" type="image/jpeg" href="logo.jpg">
+<link rel="apple-touch-icon" href="logo.jpg">
+
+<meta name="description" content="Download STools v2.5.0 for Android and Windows. An app to support daily activities and studying.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="STools">
+<meta property="og:description" content="Download STools v2.5.0 for Android and Windows.">
+<meta property="og:url" content="https://starplatform.github.io/download-apk-stools/">
+<meta property="og:image" content="https://starplatform.github.io/download-apk-stools/logo.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://starplatform.github.io/download-apk-stools/logo.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "STools",
+  "url": "https://starplatform.github.io/download-apk-stools/",
+  "image": "https://starplatform.github.io/download-apk-stools/logo.jpg"
+}
+</script>
+
 <style>
 
 <link rel="icon" type="image/png" href="logo.jpg">
@@ -182,8 +205,6 @@
   .nav a::after { content: ""; position: absolute; top: 0; left: 50%; width: 0; height: 3px; background: var(--blue); border-radius: 0 0 3px 3px; transform: translateX(-50%); transition: width 0.25s ease; }
   .nav a.active::after { width: 32px; }
 
-  .progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--blue); z-index: 50; }
-
   /* Animations */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -235,8 +256,6 @@ try {
 </script>
 </head>
 <body>
-
-<div class="progress" id="prog"></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></symbol>
@@ -644,16 +663,6 @@ try {
       root.setAttribute('data-theme', next);
       try { localStorage.setItem('stools-theme', next); } catch (e) {}
     });
-
-    /* ---------- Garis kemajuan scroll ---------- */
-    var prog = document.getElementById('prog');
-    function onScroll() {
-      var h = document.documentElement;
-      var max = h.scrollHeight - h.clientHeight;
-      prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
 
     /* ---------- Tandai unduhan sesuai perangkat ---------- */
     var ua = navigator.userAgent || '';
