@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Download APK STools v2.5.0</title>
+<title>Download STools v2.5.0</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -32,15 +32,26 @@
   .topbar b { font-size: 1.08rem; }
   .topbar .ver { margin-left: auto; background: var(--blue-soft); color: var(--blue-dark); font-size: 0.78rem; font-weight: 700; padding: 3px 10px; border-radius: 6px; }
 
+  .lang, .theme { background: none; border: 1px solid var(--line); border-radius: 8px; height: 34px; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; font: inherit; }
+  .lang { padding: 0 10px; gap: 6px; font-size: 0.78rem; font-weight: 600; color: var(--muted); }
+  .lang .on { color: var(--blue); font-weight: 800; }
+  .theme { width: 34px; }
+  .theme svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .theme .sun { display: none; }
+
   /* Hero */
   .hero { background: var(--blue-deep); color: #fff; padding: 56px 0 52px; overflow: hidden; }
   .hero-text { max-width: 520px; }
   .hero .tag { display: inline-block; background: rgba(255,255,255,0.14); font-size: 0.78rem; font-weight: 600; padding: 4px 10px; border-radius: 6px; margin-bottom: 14px; }
   .hero h1 { font-size: 2.15rem; line-height: 1.15; margin-bottom: 14px; }
   .hero p { color: #c9d8ff; margin-bottom: 24px; }
-  .btn { display: inline-block; background: #fff; color: var(--blue-dark); font-weight: 700; padding: 13px 26px; border-radius: 10px; text-decoration: none; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-block; background: #fff; color: var(--blue-dark); font-weight: 700; padding: 13px 26px; border-radius: 10px; text-decoration: none; transition: transform 0.15s ease, box-shadow 0.2s ease; }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.18); }
   .btn:active { transform: scale(0.98); }
   .btn.blue { background: var(--blue); color: #fff; }
+  .btn.ghost { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,0.55); padding: 11.5px 24px; }
+  .btn.ghost:hover { background: rgba(255,255,255,0.12); }
   .hero-note { margin-top: 12px; font-size: 0.8rem; color: #a9bdf0; }
 
   /* Stats band */
@@ -71,7 +82,8 @@
   .box h3 { font-size: 1.05rem; margin-bottom: 4px; }
   .box > p { color: var(--muted); font-size: 0.85rem; margin-bottom: 12px; }
   .chips { display: flex; flex-wrap: wrap; gap: 7px; }
-  .chip { background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 5px 10px; font-size: 0.82rem; }
+  .chip { background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 5px 10px; font-size: 0.82rem; transition: background 0.2s ease, border-color 0.2s ease; }
+  .chip:hover { background: var(--blue-soft); border-color: #b4c6ee; }
 
   /* Steps */
   .steps { display: grid; gap: 10px; counter-reset: s; }
@@ -91,17 +103,40 @@
   .dl p { color: #c9d8ff; font-size: 0.9rem; margin-bottom: 18px; }
   .dl-meta { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
   .dl-meta span { background: rgba(255,255,255,0.12); border-radius: 6px; padding: 3px 10px; font-size: 0.78rem; }
+  .dl .btn { background: var(--blue); color: #fff; }
+
+  .dl-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+  @media (min-width: 560px) { .dl-grid { grid-template-columns: 1fr 1fr; } }
+  .dl-grid .dl { display: flex; flex-direction: column; align-items: center; }
+  .dl-grid .dl .btn { margin-top: auto; }
+  .dl.win { background: var(--card); color: var(--text); border: 1px solid var(--line); }
+  .dl.win p { color: var(--muted); }
+  .dl.win .dl-meta span { background: var(--blue-soft); color: var(--blue-dark); }
+  .smart { text-align: left; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; font-size: 0.82rem; color: var(--muted); margin-bottom: 16px; }
+  .smart b { color: var(--text); }
+
+  /* OS logos (download cards only) */
+  .bi { width: 30px; height: 30px; fill: currentColor; stroke: none; }
+  .os { width: 58px; height: 58px; border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+  .os.and { background: rgba(61,220,132,0.16); color: #3DDC84; }
+  .os.wn { background: rgba(0,120,212,0.12); color: #0078D4; }
+
+  .rec { display: inline-block; background: var(--green-soft); color: var(--green); font-size: 0.72rem; font-weight: 700; padding: 2px 10px; border-radius: 6px; margin-bottom: 10px; }
+  .dl.is-rec { box-shadow: 0 0 0 2px var(--blue); }
+
+  .share { text-align: center; margin-top: 16px; }
+  .sharebtn { background: none; border: 1px dashed var(--line); color: var(--text); font: inherit; font-size: 0.88rem; padding: 9px 18px; border-radius: 10px; cursor: pointer; transition: border-color 0.2s ease, color 0.2s ease; }
+  .sharebtn:hover { border-color: var(--blue); color: var(--blue); }
+  .sharemsg { display: block; margin-top: 8px; font-size: 0.8rem; color: var(--green); min-height: 1.2em; }
 
   /* Links */
   .links { display: grid; gap: 10px; }
   @media (min-width: 560px) { .links.two { grid-template-columns: 1fr 1fr; } }
   .link { display: flex; align-items: center; gap: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; text-decoration: none; }
-  .link:hover { border-color: #b4c6ee; }
-  .link .lg { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.82rem; color: #fff; flex-shrink: 0; }
+  .link .lg { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--card); border: 1px solid var(--line); }
+  .lg svg { width: 24px; height: 24px; fill: currentColor; }
   .link b { display: block; font-size: 0.95rem; }
   .link small { color: var(--muted); font-size: 0.8rem; }
-  .link .lg { background: #fff; border: 1px solid var(--line); }
-  .lg svg { width: 24px; height: 24px; fill: currentColor; }
   .link .lg.wa { color: #25D366; } .link .lg.yt { color: #FF0000; } .link .lg.tt { color: #000000; } .link .lg.ml { color: #EA4335; }
 
   .nita { display: flex; align-items: center; gap: 14px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
@@ -110,24 +145,29 @@
   .nita span { color: var(--muted); font-size: 0.86rem; }
 
   /* FAQ */
-  details { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 8px; }
-  summary { cursor: pointer; font-weight: 600; font-size: 0.93rem; }
+  details { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin-bottom: 8px; transition: border-color 0.2s ease; }
+  details:hover { border-color: #b4c6ee; }
+  summary { cursor: pointer; font-weight: 600; font-size: 0.93rem; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--blue); font-size: 1.3rem; line-height: 1; transition: transform 0.25s ease; }
+  details[open] summary::after { transform: rotate(45deg); }
   details p { margin-top: 8px; color: var(--muted); font-size: 0.88rem; }
+  details[open] p { animation: fadeIn 0.3s ease; }
 
   footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 36px 18px 20px; }
 
   /* Bottom nav */
   .nav { position: fixed; left: 0; right: 0; bottom: 0; height: 56px; background: var(--card); border-top: 1px solid var(--line); display: flex; z-index: 20; }
-  .nav a { flex: 1; display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--muted); font-size: 0.82rem; font-weight: 600; }
+  .nav a { flex: 1; display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--muted); font-size: 0.82rem; font-weight: 600; position: relative; transition: color 0.2s; }
   .nav a:hover, .nav a.active { color: var(--blue); }
-  .nav a { position: relative; transition: color 0.2s; }
   .nav a::after { content: ""; position: absolute; top: 0; left: 50%; width: 0; height: 3px; background: var(--blue); border-radius: 0 0 3px 3px; transform: translateX(-50%); transition: width 0.25s ease; }
   .nav a.active::after { width: 32px; }
+
+  .progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--blue); z-index: 50; }
 
   /* Animations */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes drop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
 
   .topbar { animation: fadeIn 0.5s ease both; }
   .hero-text > * { animation: fadeUp 0.6s ease both; }
@@ -142,44 +182,70 @@
   .stats .wrap > div:nth-child(3) { animation-delay: 0.66s; }
   .stats .wrap > div:nth-child(4) { animation-delay: 0.74s; }
 
-  .btn { transition: transform 0.15s ease, box-shadow 0.2s ease; }
-  .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.18); }
-  .btn svg { width: 16px; height: 16px; margin-right: 8px; vertical-align: -2px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-  .btn:hover svg { animation: drop 0.7s ease infinite; }
-
   .change, .box, .step, .notice, .link, .nita { transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
   .change:hover, .box:hover, .step:hover, .notice:hover, .link:hover, .nita:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(23,32,51,0.08); border-color: #b4c6ee; }
   .ic { transition: transform 0.25s ease, background 0.2s ease, color 0.2s ease; }
   .change:hover .ic { transform: rotate(-8deg) scale(1.08); background: var(--blue); color: #fff; }
-  .chip { transition: background 0.2s ease, border-color 0.2s ease; }
-  .chip:hover { background: var(--blue-soft); border-color: #b4c6ee; }
-  details { transition: border-color 0.2s ease; }
-  details:hover { border-color: #b4c6ee; }
-  details[open] p { animation: fadeIn 0.3s ease; }
-  summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-  summary::-webkit-details-marker { display: none; }
-  summary::after { content: "+"; color: var(--blue); font-size: 1.3rem; line-height: 1; transition: transform 0.25s ease; }
-  details[open] summary::after { transform: rotate(45deg); }
 
-  /* Scroll reveal (hanya aktif kalau JS jalan) */
   .js .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
   .js .reveal.in { opacity: 1; transform: none; }
   .js .reveal.in:hover { transform: translateY(-3px); }
+
+  /* Dark mode */
+  :root[data-theme="dark"] { --bg: #0e1424; --card: #161e33; --line: #26314d; --text: #e7ecf7; --muted: #9aa7c0; --blue-soft: #1d2a4d; --green-soft: #12301f; --green: #4ade80; }
+  :root[data-theme="dark"] .theme .sun { display: block; }
+  :root[data-theme="dark"] .theme .moon { display: none; }
+  :root[data-theme="dark"] .ic,
+  :root[data-theme="dark"] .topbar .ver,
+  :root[data-theme="dark"] .dl.win .dl-meta span { color: #9db8ff; }
+  :root[data-theme="dark"] .link .lg.tt { color: #ffffff; }
+  :root[data-theme="dark"] .change:hover .ic { color: #fff; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
     .js .reveal { opacity: 1; transform: none; }
   }
 </style>
-<script>document.documentElement.classList.add('js');</script>
+<script>
+document.documentElement.classList.add('js');
+try {
+  var t = localStorage.getItem('stools-theme');
+  if (!t && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches) t = 'dark';
+  if (t) document.documentElement.setAttribute('data-theme', t);
+} catch (e) {}
+</script>
 </head>
 <body>
+
+<div class="progress" id="prog"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></symbol>
+  <symbol id="cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+  <symbol id="gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+  <symbol id="users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+  <symbol id="phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14zM6.5 17H20v4H6.5a2.5 2.5 0 0 1 0-4z"/></symbol>
+  <symbol id="flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2.2h12.4a1.5 1.5 0 0 0 1.3-2.2L14 9V3M7.5 15h9"/></symbol>
+  <symbol id="bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="b-and" viewBox="0 0 24 24"><path d="M17.523 15.3414c-.5511 0-.9993-.4486-.9993-.9997s.4483-.9993.9993-.9993c.5511 0 .9993.4483.9993.9993.0001.5511-.4482.9997-.9993.9997m-11.046 0c-.5511 0-.9993-.4486-.9993-.9997s.4482-.9993.9993-.9993c.5511 0 .9993.4483.9993.9993 0 .5511-.4483.9997-.9993.9997m11.4045-6.02l1.9973-3.4592a.416.416 0 00-.1521-.5676.416.416 0 00-.5676.1521l-2.0223 3.503C15.5902 8.2439 13.8533 7.8508 12 7.8508s-3.5902.3931-5.1367 1.0989L4.841 5.4467a.4161.4161 0 00-.5677-.1521.4157.4157 0 00-.1521.5676l1.9973 3.4592C2.6889 11.1867.3432 14.6589 0 18.761h24c-.3435-4.1021-2.6892-7.5743-6.1185-9.4396"/></symbol>
+  <symbol id="b-win" viewBox="0 0 24 24"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></symbol>
+  <symbol id="b-wa" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
+  <symbol id="b-yt" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></symbol>
+  <symbol id="b-tt" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
+  <symbol id="b-gm" viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></symbol>
+</svg>
 
 <div class="topbar">
   <div class="wrap">
     <img src="logo.jpg" alt="STools">
     <b>STools</b>
     <span class="ver">v2.5.0</span>
+    <button class="lang" id="langBtn" aria-label="Language"><span data-l="en">EN</span><span>/</span><span data-l="id">ID</span></button>
+    <button class="theme" id="themeBtn" aria-label="Toggle theme">
+      <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
   </div>
 </div>
 
@@ -187,204 +253,219 @@
   <div class="wrap">
     <div class="hero-text">
       <span class="tag">STools Project</span>
-      <h1>Aplikasi pembantu aktivitas dan studi</h1>
-      <p>Hitungan, absensi, nilai, keuangan, sampai grup belajar dan panggilan suara, semuanya ada di satu aplikasi Android.</p>
-      <a href="STools.apk" class="btn" download><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Unduh APK v2.5.0</a>
-      <div class="hero-note">Gratis · Android 6.0 ke atas</div>
+      <h1 data-i="hero_h1">An app to support daily activities and studying</h1>
+      <p data-i="hero_p">Calculations, attendance, grades, finance, study groups, and voice calls, all in one app.</p>
+      <div class="btns">
+        <a href="STools.apk" class="btn" download data-i="btn_and">Download for Android</a>
+        <a href="#download" class="btn ghost" data-i="btn_win">Download for Windows</a>
+      </div>
+      <div class="hero-note" data-i="hero_note">Free · Android 6.0+ · Windows 10/11 (64-bit)</div>
     </div>
   </div>
 </div>
 
 <div class="stats">
   <div class="wrap">
-    <div><b>2.5.0</b><span>Versi</span></div>
+    <div><b>2.5.0</b><span data-i="st_ver">Version</span></div>
     <div><b>6.0+</b><span>Android</span></div>
-    <div><b>±7 MB</b><span>Ukuran</span></div>
-    <div><b>8</b><span>Fitur baru</span></div>
+    <div><b>±7 MB</b><span data-i="st_size">Size</span></div>
+    <div><b>8</b><span data-i="st_new">New features</span></div>
   </div>
 </div>
 
 <main class="wrap">
 
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="share" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></symbol>
-    <symbol id="cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
-    <symbol id="gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
-    <symbol id="users" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
-    <symbol id="phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
-    <symbol id="book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14zM6.5 17H20v4H6.5a2.5 2.5 0 0 1 0-4z"/></symbol>
-    <symbol id="flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 19a1.5 1.5 0 0 0 1.3 2.2h12.4a1.5 1.5 0 0 0 1.3-2.2L14 9V3M7.5 15h9"/></symbol>
-    <symbol id="bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
-    <symbol id="b-wa" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
-    <symbol id="b-yt" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></symbol>
-    <symbol id="b-tt" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></symbol>
-    <symbol id="b-gm" viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></symbol>
-  </svg>
-
   <section id="update">
-    <div class="label">Changelog</div>
-    <h2>Yang baru di versi 2.5.0</h2>
-    <p class="sub">Delapan pembaruan di rilis ini, dari fitur sosial sampai alat belajar baru.</p>
+    <div class="label" data-i="cl_label">Changelog</div>
+    <h2 data-i="cl_h2">What's new in version 2.5.0</h2>
+    <p class="sub" data-i="cl_sub">Eight updates in this release, from social features to new study tools.</p>
     <div class="changes">
       <div class="change">
         <div class="ic"><svg class="i"><use href="#share"/></svg></div>
-        <div><h3>Bagikan jawaban<span class="badge">BARU</span></h3><p>Kirim jawaban soal ke teman atau grup langsung dari aplikasi.</p></div>
+        <div><h3><span data-i="c1t">Share answers</span><span class="badge" data-i="new">NEW</span></h3><p data-i="c1d">Send the answer to a question to friends or groups right from the app.</p></div>
       </div>
       <div class="change">
         <div class="ic"><svg class="i"><use href="#cal"/></svg></div>
-        <div><h3>Kalender pendidikan<span class="badge">BARU</span></h3><p>Lihat jadwal dan hari penting pendidikan dalam satu kalender.</p></div>
+        <div><h3><span data-i="c2t">Education calendar</span><span class="badge" data-i="new">NEW</span></h3><p data-i="c2d">See schedules and important education dates in one calendar.</p></div>
       </div>
       <div class="change">
         <div class="ic"><svg class="i"><use href="#gear"/></svg></div>
-        <div><h3>Pengaturan baru<span class="badge">BARU</span></h3><p>Halaman pengaturan ditata ulang agar lebih mudah dipakai.</p></div>
+        <div><h3><span data-i="c3t">New settings</span><span class="badge" data-i="new">NEW</span></h3><p data-i="c3d">The settings page has been reorganized to make it easier to use.</p></div>
       </div>
       <div class="change">
         <div class="ic"><svg class="i"><use href="#users"/></svg></div>
-        <div><h3>Fitur membuat grup<span class="badge">BARU</span></h3><p>Buat grup untuk belajar dan berdiskusi bersama teman.</p></div>
+        <div><h3><span data-i="c4t">Create groups</span><span class="badge" data-i="new">NEW</span></h3><p data-i="c4d">Create groups to study and discuss together with friends.</p></div>
       </div>
       <div class="change">
         <div class="ic"><svg class="i"><use href="#phone"/></svg></div>
-        <div><h3>Fitur panggilan suara<span class="badge">BARU</span></h3><p>Telepon teman atau anggota grup langsung dari aplikasi.</p></div>
+        <div><h3><span data-i="c5t">Voice calls</span><span class="badge" data-i="new">NEW</span></h3><p data-i="c5d">Call friends or group members directly from the app.</p></div>
       </div>
       <div class="change">
         <div class="ic"><svg class="i"><use href="#book"/></svg></div>
-        <div><h3>Fitur bagikan materi<span class="badge">BARU</span></h3><p>Kirim materi belajar ke teman dan grup dengan sekali ketuk.</p></div>
+        <div><h3><span data-i="c6t">Share materials</span><span class="badge" data-i="new">NEW</span></h3><p data-i="c6d">Send study materials to friends and groups with a single tap.</p></div>
       </div>
       <div class="change">
         <div class="ic"><svg class="i"><use href="#flask"/></svg></div>
-        <div><h3>Tabel periodik<span class="badge">BARU</span></h3><p>Tabel unsur kimia lengkap tersedia di dalam aplikasi.</p></div>
+        <div><h3><span data-i="c7t">Periodic table</span><span class="badge" data-i="new">NEW</span></h3><p data-i="c7d">A complete table of chemical elements, available inside the app.</p></div>
       </div>
       <div class="change">
         <div class="ic"><svg class="i"><use href="#bell"/></svg></div>
-        <div><h3>Fitur notifikasi otomatis<span class="badge">BARU</span></h3><p>Pengingat dan info penting muncul otomatis tanpa dicek manual.</p></div>
+        <div><h3><span data-i="c8t">Automatic notifications</span><span class="badge" data-i="new">NEW</span></h3><p data-i="c8d">Reminders and important information appear automatically, with no need to check manually.</p></div>
       </div>
     </div>
   </section>
 
   <section id="features">
-    <div class="label">Fitur</div>
-    <h2>Isi aplikasi</h2>
-    <p class="sub">Dibuat untuk kebutuhan sekolah dan keseharian.</p>
+    <div class="label" data-i="ft_label">Features</div>
+    <h2 data-i="ft_h2">Inside the app</h2>
+    <p class="sub" data-i="ft_sub">Designed for school needs and everyday use.</p>
     <div class="grid">
       <div class="box">
-        <h3>Modul Matematika</h3>
-        <p>Kalkulator yang disesuaikan dengan kurikulum sekolah.</p>
+        <h3 data-i="m_h3">Mathematics Module</h3>
+        <p data-i="m_p">Calculators matched to the school curriculum.</p>
         <div class="chips">
-          <span class="chip">Kalkulator dasar kelas 1–3</span>
-          <span class="chip">Bangun datar kelas 4–6</span>
-          <span class="chip">Aljabar dan teorema kelas 7–9</span>
-          <span class="chip">Trigonometri dan matriks kelas 10–12</span>
+          <span class="chip" data-i="m1">Basic calculator, grades 1–3</span>
+          <span class="chip" data-i="m2">Plane geometry formulas, grades 4–6</span>
+          <span class="chip" data-i="m3">Algebra and theorems, grades 7–9</span>
+          <span class="chip" data-i="m4">Trigonometry and matrices, grades 10–12</span>
         </div>
       </div>
       <div class="box">
-        <h3>Modul Pendukung</h3>
-        <p>Administrasi digital dan pemantauan hasil belajar.</p>
+        <h3 data-i="s_h3">Support Module</h3>
+        <p data-i="s_p">Digital administration and tracking of learning results.</p>
         <div class="chips">
-          <span class="chip">Absensi digital</span>
-          <span class="chip">Keuangan digital</span>
-          <span class="chip">Nilai rata-rata</span>
-          <span class="chip">Rangking murid</span>
-          <span class="chip">Total nilai</span>
+          <span class="chip" data-i="s1">Digital attendance</span>
+          <span class="chip" data-i="s2">Digital finance</span>
+          <span class="chip" data-i="s3">Average grade</span>
+          <span class="chip" data-i="s4">Student ranking</span>
+          <span class="chip" data-i="s5">Total score</span>
         </div>
       </div>
     </div>
   </section>
 
   <section id="install">
-    <div class="label">Cara pasang</div>
-    <h2>Tiga langkah</h2>
-    <p class="sub">Pasang manual lewat file APK.</p>
+    <div class="label" data-i="in_label">How to install</div>
+    <h2 data-i="in_h2">Three steps</h2>
+    <p class="sub" data-i="in_sub">Install manually using the APK file.</p>
     <div class="steps">
-      <div class="step"><b>Unduh file APK</b><span>Tekan tombol unduh, tunggu sampai selesai.</span></div>
-      <div class="step"><b>Izinkan pemasangan</b><span>Kalau diminta, aktifkan izin pasang dari sumber ini di pengaturan HP.</span></div>
-      <div class="step"><b>Buka dan buat akun</b><span>Pasang, buka STools, lalu daftar dengan akun STools.</span></div>
+      <div class="step"><b data-i="i1t">Download the APK file</b><span data-i="i1d">Tap the download button and wait until it finishes.</span></div>
+      <div class="step"><b data-i="i2t">Allow installation</b><span data-i="i2d">If prompted, enable installation from this source in your phone settings.</span></div>
+      <div class="step"><b data-i="i3t">Open the app and create an account</b><span data-i="i3d">Install the app, open STools, then sign up with a STools account.</span></div>
     </div>
   </section>
 
   <section id="privacy">
-    <div class="label">Akun dan keamanan</div>
-    <h2>Yang perlu kamu tahu</h2>
-    <p class="sub">Singkat dan jelas.</p>
+    <div class="label" data-i="pv_label">Account and security</div>
+    <h2 data-i="pv_h2">What you should know</h2>
+    <p class="sub" data-i="pv_sub">Short and clear.</p>
     <div class="notice">
-      <h3>Akun khusus STools</h3>
-      <p>Kamu perlu membuat akun untuk memakai aplikasi. Kami tidak meminta nomor HP, KTP, atau tautan ke media sosial.</p>
+      <h3 data-i="n1t">A STools-only account</h3>
+      <p data-i="n1d">You need to create an account to use the app. We do not ask for a phone number, ID card, or links to social media accounts.</p>
     </div>
     <div class="notice">
-      <h3>Aplikasi tidak jalan diam-diam</h3>
-      <p>STools tidak berjalan di latar belakang tanpa sepengetahuanmu.</p>
+      <h3 data-i="n2t">The app does not run silently</h3>
+      <p data-i="n2d">STools does not run in the background without your knowledge.</p>
     </div>
     <div class="notice">
-      <h3>Cek APK sendiri</h3>
-      <p>Unggah file APK ke VirusTotal.com sebelum memasang. Setelah terpasang, buka Play Store, tekan profil, pilih Play Protect, lalu tekan Pindai.</p>
+      <h3 data-i="n3t">Check the APK yourself</h3>
+      <p data-i="n3d">Upload the APK file to VirusTotal.com before installing. After installation, open Play Store, tap your profile, choose Play Protect, then tap Scan.</p>
     </div>
   </section>
 
   <section id="download">
-    <div class="dl">
-      <h3>Dapatkan STools v2.5.0</h3>
-      <p>Aplikasi gratis untuk pelajar dan guru.</p>
-      <div class="dl-meta"><span>Android 6.0+</span><span>±7 MB</span><span>APK</span></div>
-      <a href="STools.apk" class="btn" download>Unduh APK</a>
+    <div class="label" data-i="dl_label">Download</div>
+    <h2 data-i="dl_h2">Get STools v2.5.0</h2>
+    <p class="sub" data-i="dl_sub">Choose the version for your device. Free for students and teachers.</p>
+    <div class="dl-grid">
+      <div class="dl" id="card-android">
+        <div class="os and"><svg class="bi"><use href="#b-and"/></svg></div>
+        <h3 data-i="da_h3">STools for Android</h3>
+        <p data-i="da_p">Install using the APK file on your phone.</p>
+        <div class="dl-meta"><span>Android 6.0+</span><span>±7 MB</span><span>APK</span></div>
+        <a href="STools.apk" class="btn" download data-i="da_btn">Download APK</a>
+      </div>
+      <div class="dl win" id="card-windows">
+        <div class="os wn"><svg class="bi"><use href="#b-win"/></svg></div>
+        <h3 data-i="dw_h3">STools for Windows</h3>
+        <p data-i="dw_p">Install on a PC or laptop. An internet connection is required.</p>
+        <div class="dl-meta"><span>Windows 10/11 (64-bit)</span><span>±80 MB</span><span>EXE</span></div>
+        <div class="smart" data-ih="dw_smart"><b>See a blue "Windows protected your PC" screen?</b> This is a built-in Windows check for new apps. Click <b>More info</b>, then <b>Run anyway</b>.</div>
+        <!-- GANTI href di bawah dengan link unduh .exe (misalnya link GitHub Releases) -->
+        <a href="STools-Setup-2.5.0.exe" class="btn" download data-i="dw_btn">Download for Windows</a>
+      </div>
+    </div>
+    <div class="share">
+      <button class="sharebtn" id="shareBtn" data-i="share">Share STools with friends</button>
+      <span class="sharemsg" id="shareMsg"></span>
     </div>
   </section>
 
   <section id="channels">
-    <div class="label">Tetap terhubung</div>
-    <h2>Saluran resmi</h2>
-    <p class="sub">Info update, tutorial, dan pengumuman.</p>
+    <div class="label" data-i="ch_label">Stay connected</div>
+    <h2 data-i="ch_h2">Official channels</h2>
+    <p class="sub" data-i="ch_sub">Updates, tutorials, and announcements.</p>
     <div class="links two">
       <a class="link" href="https://whatsapp.com/channel/0029Vb7yiqTK0IBldctwJA1R" target="_blank" rel="noopener">
-        <div class="lg wa"><svg><use href="#b-wa"/></svg></div><div><b>Saluran WhatsApp</b><small>Info update dan pengumuman</small></div>
+        <div class="lg wa"><svg><use href="#b-wa"/></svg></div><div><b data-i="wa_t">WhatsApp Channel</b><small data-i="wa_d">Updates and announcements</small></div>
       </a>
       <a class="link" href="https://youtube.com/@startoolsid?si=qhsO6VYx96r2LikF" target="_blank" rel="noopener">
-        <div class="lg yt"><svg><use href="#b-yt"/></svg></div><div><b>YouTube STools</b><small>Tutorial penggunaan</small></div>
+        <div class="lg yt"><svg><use href="#b-yt"/></svg></div><div><b>YouTube STools</b><small data-i="yt_d">Usage tutorials</small></div>
       </a>
       <a class="link" href="https://vm.tiktok.com/ZS9hRYnEdWJqC-lGE2p/" target="_blank" rel="noopener">
-        <div class="lg tt"><svg><use href="#b-tt"/></svg></div><div><b>TikTok STools</b><small>Video singkat</small></div>
+        <div class="lg tt"><svg><use href="#b-tt"/></svg></div><div><b>TikTok STools</b><small data-i="tt_d">Short videos</small></div>
       </a>
       <a class="link" href="mailto:startoolsid@gmail.com">
-        <div class="lg ml"><svg><use href="#b-gm"/></svg></div><div><b>Gmail</b><small>Kendala atau bug</small></div>
+        <div class="lg ml"><svg><use href="#b-gm"/></svg></div><div><b>Gmail</b><small data-i="gm_d">Issues or bugs</small></div>
       </a>
     </div>
   </section>
 
   <section id="nita">
-    <div class="label">Kenalan</div>
+    <div class="label" data-i="nt_label">Meet</div>
     <h2>Nita AI</h2>
-    <p class="sub">Asisten AI dari ekosistem Star Platform.</p>
+    <p class="sub" data-i="nt_sub">An AI assistant from the Star Platform ecosystem.</p>
     <div class="nita">
       <img src="logo.png" alt="Nita AI">
-      <div><b>AI Companion Star Platform</b><span>Membahas tugas, belajar, dan tips harian dengan cara santai.</span></div>
+      <div><b data-i="nt_b">Star Platform AI Companion</b><span data-i="nt_s">Discusses assignments, studying, and daily tips in a relaxed way.</span></div>
     </div>
     <div class="links two">
       <a class="link" href="https://vm.tiktok.com/ZS9hRYqPuJ3PE-tiV4A/" target="_blank" rel="noopener">
-        <div class="lg tt"><svg><use href="#b-tt"/></svg></div><div><b>TikTok Nita AI</b><small>Konten singkat</small></div>
+        <div class="lg tt"><svg><use href="#b-tt"/></svg></div><div><b>TikTok Nita AI</b><small data-i="ntt_d">Short content</small></div>
       </a>
       <a class="link" href="https://youtube.com/@nitaaiid?si=0ekMGS2FNaSIC0A0" target="_blank" rel="noopener">
-        <div class="lg yt"><svg><use href="#b-yt"/></svg></div><div><b>YouTube Nita AI</b><small>Pembahasan lebih panjang</small></div>
+        <div class="lg yt"><svg><use href="#b-yt"/></svg></div><div><b>YouTube Nita AI</b><small data-i="nyt_d">Longer discussions</small></div>
       </a>
     </div>
   </section>
 
   <section id="faq">
     <div class="label">Q&amp;A</div>
-    <h2>Pertanyaan umum</h2>
-    <p class="sub">Yang sering ditanyakan.</p>
+    <h2 data-i="fq_h2">Frequently asked questions</h2>
+    <p class="sub" data-i="fq_sub">Common questions and answers.</p>
     <details>
-      <summary>Kenapa harus login?</summary>
-      <p>Supaya data absensi, keuangan, dan nilai yang kamu simpan terpisah dari pengguna lain dan tersinkron ke akunmu.</p>
+      <summary data-i="q1">Why do I need to log in?</summary>
+      <p data-i="a1">So that the attendance, finance, and grade data you save stays separate from other users and is synced to your account.</p>
     </details>
     <details>
-      <summary>Bagaimana kalau lupa password?</summary>
-      <p>Hubungi kami lewat email dan sebutkan username akunmu.</p>
+      <summary data-i="q2">What if I forget my password?</summary>
+      <p data-i="a2">Contact us by email and include your account username.</p>
     </details>
     <details>
-      <summary>Apakah perlu data pribadi untuk daftar?</summary>
-      <p>Tidak. Akun hanya dipakai di STools, tanpa nomor HP, KTP, atau akun media sosial.</p>
+      <summary data-i="q3">Is personal data required to sign up?</summary>
+      <p data-i="a3">No. The account is used only within STools, without a phone number, ID card, or social media account.</p>
     </details>
     <details>
-      <summary>Ada kendala saat pasang atau menemukan bug?</summary>
-      <p>Kirim email ke startoolsid@gmail.com dengan menyebut tipe HP dan masalahnya.</p>
+      <summary data-i="q4">Can STools be used on Windows?</summary>
+      <p data-i="a4">Yes. Download the installer for Windows 10/11 (64-bit) and install it like any other program. The app requires an internet connection.</p>
+    </details>
+    <details>
+      <summary data-i="q5">Why does Windows show a warning during installation?</summary>
+      <p data-i="a5">This is Windows SmartScreen, a built-in check for newly released apps that few people have downloaded yet. Click More info, then Run anyway to continue.</p>
+    </details>
+    <details>
+      <summary data-i="q6">Having trouble installing, or found a bug?</summary>
+      <p data-i="a6">Send an email to startoolsid@gmail.com and mention your device type and the problem.</p>
     </details>
   </section>
 
@@ -393,14 +474,199 @@
 <footer>© 2026 STools Project</footer>
 
 <nav class="nav">
-  <a href="#update">Update</a>
-  <a href="#features">Fitur</a>
-  <a href="#download">Unduh</a>
-  <a href="#channels">Kontak</a>
+  <a href="#update" data-i="nav_up">Updates</a>
+  <a href="#features" data-i="nav_ft">Features</a>
+  <a href="#download" data-i="nav_dl">Download</a>
+  <a href="#channels" data-i="nav_ct">Contact</a>
 </nav>
 
 <script>
   (function () {
+    var root = document.documentElement;
+
+    /* ---------- Kamus bahasa: [English, Indonesia baku] ---------- */
+    var D = {
+      title: ['Download STools v2.5.0', 'Unduh STools v2.5.0'],
+      hero_h1: ['An app to support daily activities and studying', 'Aplikasi pendukung aktivitas dan belajar'],
+      hero_p: ['Calculations, attendance, grades, finance, study groups, and voice calls, all in one app.', 'Perhitungan, absensi, nilai, keuangan, grup belajar, hingga panggilan suara, semuanya dalam satu aplikasi.'],
+      btn_and: ['Download for Android', 'Unduh untuk Android'],
+      btn_win: ['Download for Windows', 'Unduh untuk Windows'],
+      hero_note: ['Free · Android 6.0+ · Windows 10/11 (64-bit)', 'Gratis · Android 6.0+ · Windows 10/11 (64-bit)'],
+      st_ver: ['Version', 'Versi'],
+      st_size: ['Size', 'Ukuran'],
+      st_new: ['New features', 'Fitur baru'],
+      cl_label: ['Changelog', 'Catatan perubahan'],
+      cl_h2: ["What's new in version 2.5.0", 'Pembaruan pada versi 2.5.0'],
+      cl_sub: ['Eight updates in this release, from social features to new study tools.', 'Delapan pembaruan pada rilis ini, mulai dari fitur sosial hingga alat belajar baru.'],
+      'new': ['NEW', 'BARU'],
+      c1t: ['Share answers', 'Bagikan jawaban'],
+      c1d: ['Send the answer to a question to friends or groups right from the app.', 'Kirim jawaban soal kepada teman atau grup langsung dari aplikasi.'],
+      c2t: ['Education calendar', 'Kalender pendidikan'],
+      c2d: ['See schedules and important education dates in one calendar.', 'Lihat jadwal dan hari penting pendidikan dalam satu kalender.'],
+      c3t: ['New settings', 'Pengaturan baru'],
+      c3d: ['The settings page has been reorganized to make it easier to use.', 'Halaman pengaturan ditata ulang agar lebih mudah digunakan.'],
+      c4t: ['Create groups', 'Fitur membuat grup'],
+      c4d: ['Create groups to study and discuss together with friends.', 'Buat grup untuk belajar dan berdiskusi bersama teman.'],
+      c5t: ['Voice calls', 'Fitur panggilan suara'],
+      c5d: ['Call friends or group members directly from the app.', 'Hubungi teman atau anggota grup langsung dari aplikasi.'],
+      c6t: ['Share materials', 'Fitur bagikan materi'],
+      c6d: ['Send study materials to friends and groups with a single tap.', 'Kirim materi belajar kepada teman dan grup hanya dengan satu ketukan.'],
+      c7t: ['Periodic table', 'Tabel periodik'],
+      c7d: ['A complete table of chemical elements, available inside the app.', 'Tabel unsur kimia lengkap tersedia di dalam aplikasi.'],
+      c8t: ['Automatic notifications', 'Fitur notifikasi otomatis'],
+      c8d: ['Reminders and important information appear automatically, with no need to check manually.', 'Pengingat dan informasi penting muncul otomatis tanpa perlu diperiksa secara manual.'],
+      ft_label: ['Features', 'Fitur'],
+      ft_h2: ['Inside the app', 'Isi aplikasi'],
+      ft_sub: ['Designed for school needs and everyday use.', 'Dirancang untuk kebutuhan sekolah dan keseharian.'],
+      m_h3: ['Mathematics Module', 'Modul Matematika'],
+      m_p: ['Calculators matched to the school curriculum.', 'Kalkulator yang disesuaikan dengan kurikulum sekolah.'],
+      m1: ['Basic calculator, grades 1–3', 'Kalkulator dasar kelas 1–3'],
+      m2: ['Plane geometry formulas, grades 4–6', 'Rumus bangun datar kelas 4–6'],
+      m3: ['Algebra and theorems, grades 7–9', 'Aljabar dan teorema kelas 7–9'],
+      m4: ['Trigonometry and matrices, grades 10–12', 'Trigonometri dan matriks kelas 10–12'],
+      s_h3: ['Support Module', 'Modul Pendukung'],
+      s_p: ['Digital administration and tracking of learning results.', 'Administrasi digital dan pemantauan hasil belajar.'],
+      s1: ['Digital attendance', 'Absensi digital'],
+      s2: ['Digital finance', 'Keuangan digital'],
+      s3: ['Average grade', 'Nilai rata-rata'],
+      s4: ['Student ranking', 'Peringkat murid'],
+      s5: ['Total score', 'Total nilai'],
+      in_label: ['How to install', 'Cara pemasangan'],
+      in_h2: ['Three steps', 'Tiga langkah'],
+      in_sub: ['Install manually using the APK file.', 'Pasang secara manual menggunakan berkas APK.'],
+      i1t: ['Download the APK file', 'Unduh berkas APK'],
+      i1d: ['Tap the download button and wait until it finishes.', 'Tekan tombol unduh dan tunggu hingga selesai.'],
+      i2t: ['Allow installation', 'Izinkan pemasangan'],
+      i2d: ['If prompted, enable installation from this source in your phone settings.', 'Jika diminta, aktifkan izin pemasangan dari sumber ini pada pengaturan ponsel.'],
+      i3t: ['Open the app and create an account', 'Buka aplikasi dan buat akun'],
+      i3d: ['Install the app, open STools, then sign up with a STools account.', 'Pasang aplikasi, buka STools, lalu daftar menggunakan akun STools.'],
+      pv_label: ['Account and security', 'Akun dan keamanan'],
+      pv_h2: ['What you should know', 'Hal yang perlu Anda ketahui'],
+      pv_sub: ['Short and clear.', 'Singkat dan jelas.'],
+      n1t: ['A STools-only account', 'Akun khusus STools'],
+      n1d: ['You need to create an account to use the app. We do not ask for a phone number, ID card, or links to social media accounts.', 'Anda perlu membuat akun untuk menggunakan aplikasi. Kami tidak meminta nomor ponsel, KTP, ataupun tautan ke akun media sosial.'],
+      n2t: ['The app does not run silently', 'Aplikasi tidak berjalan diam-diam'],
+      n2d: ['STools does not run in the background without your knowledge.', 'STools tidak berjalan di latar belakang tanpa sepengetahuan Anda.'],
+      n3t: ['Check the APK yourself', 'Periksa APK sendiri'],
+      n3d: ['Upload the APK file to VirusTotal.com before installing. After installation, open Play Store, tap your profile, choose Play Protect, then tap Scan.', 'Unggah berkas APK ke VirusTotal.com sebelum memasang. Setelah terpasang, buka Play Store, ketuk profil, pilih Play Protect, lalu ketuk Pindai.'],
+      dl_label: ['Download', 'Unduh'],
+      dl_h2: ['Get STools v2.5.0', 'Dapatkan STools v2.5.0'],
+      dl_sub: ['Choose the version for your device. Free for students and teachers.', 'Pilih versi sesuai perangkat Anda. Gratis untuk pelajar dan guru.'],
+      da_h3: ['STools for Android', 'STools untuk Android'],
+      da_p: ['Install using the APK file on your phone.', 'Pasang menggunakan berkas APK pada ponsel.'],
+      da_btn: ['Download APK', 'Unduh APK'],
+      dw_h3: ['STools for Windows', 'STools untuk Windows'],
+      dw_p: ['Install on a PC or laptop. An internet connection is required.', 'Pasang pada PC atau laptop. Memerlukan koneksi internet.'],
+      dw_smart: ['<b>See a blue "Windows protected your PC" screen?</b> This is a built-in Windows check for new apps. Click <b>More info</b>, then <b>Run anyway</b>.', '<b>Muncul layar biru "Windows protected your PC"?</b> Ini merupakan pemeriksaan bawaan Windows untuk aplikasi baru. Klik <b>More info</b>, lalu <b>Run anyway</b>.'],
+      dw_btn: ['Download for Windows', 'Unduh untuk Windows'],
+      share: ['Share STools with friends', 'Bagikan STools kepada teman'],
+      rec: ['Suitable for your device', 'Sesuai dengan perangkat Anda'],
+      copied: ['Link copied', 'Tautan disalin'],
+      copyaddr: ['Copy the link from the address bar', 'Salin tautan dari kolom alamat'],
+      ch_label: ['Stay connected', 'Tetap terhubung'],
+      ch_h2: ['Official channels', 'Saluran resmi'],
+      ch_sub: ['Updates, tutorials, and announcements.', 'Pembaruan, tutorial, dan pengumuman.'],
+      wa_t: ['WhatsApp Channel', 'Saluran WhatsApp'],
+      wa_d: ['Updates and announcements', 'Pembaruan dan pengumuman'],
+      yt_d: ['Usage tutorials', 'Tutorial penggunaan'],
+      tt_d: ['Short videos', 'Video singkat'],
+      gm_d: ['Issues or bugs', 'Kendala atau kesalahan sistem'],
+      nt_label: ['Meet', 'Perkenalan'],
+      nt_sub: ['An AI assistant from the Star Platform ecosystem.', 'Asisten AI dari ekosistem Star Platform.'],
+      nt_b: ['Star Platform AI Companion', 'Pendamping AI Star Platform'],
+      nt_s: ['Discusses assignments, studying, and daily tips in a relaxed way.', 'Membahas tugas, belajar, dan tips harian dengan santai.'],
+      ntt_d: ['Short content', 'Konten singkat'],
+      nyt_d: ['Longer discussions', 'Pembahasan lebih panjang'],
+      fq_h2: ['Frequently asked questions', 'Pertanyaan yang sering diajukan'],
+      fq_sub: ['Common questions and answers.', 'Pertanyaan umum beserta jawabannya.'],
+      q1: ['Why do I need to log in?', 'Mengapa saya harus masuk?'],
+      a1: ['So that the attendance, finance, and grade data you save stays separate from other users and is synced to your account.', 'Agar data absensi, keuangan, dan nilai yang Anda simpan terpisah dari pengguna lain dan tersinkronisasi dengan akun Anda.'],
+      q2: ['What if I forget my password?', 'Bagaimana jika saya lupa kata sandi?'],
+      a2: ['Contact us by email and include your account username.', 'Hubungi kami melalui email dan sertakan nama pengguna akun Anda.'],
+      q3: ['Is personal data required to sign up?', 'Apakah data pribadi diperlukan untuk mendaftar?'],
+      a3: ['No. The account is used only within STools, without a phone number, ID card, or social media account.', 'Tidak. Akun hanya digunakan di STools, tanpa nomor ponsel, KTP, atau akun media sosial.'],
+      q4: ['Can STools be used on Windows?', 'Apakah STools dapat digunakan di Windows?'],
+      a4: ['Yes. Download the installer for Windows 10/11 (64-bit) and install it like any other program. The app requires an internet connection.', 'Dapat. Unduh pemasang untuk Windows 10/11 (64-bit), lalu pasang seperti program pada umumnya. Aplikasi memerlukan koneksi internet.'],
+      q5: ['Why does Windows show a warning during installation?', 'Mengapa Windows menampilkan peringatan saat pemasangan?'],
+      a5: ['This is Windows SmartScreen, a built-in check for newly released apps that few people have downloaded yet. Click More info, then Run anyway to continue.', 'Ini adalah Windows SmartScreen, pemeriksaan bawaan untuk aplikasi yang baru dirilis dan belum banyak diunduh. Klik More info, lalu Run anyway untuk melanjutkan.'],
+      q6: ['Having trouble installing, or found a bug?', 'Mengalami kendala saat pemasangan atau menemukan kesalahan sistem?'],
+      a6: ['Send an email to startoolsid@gmail.com and mention your device type and the problem.', 'Kirim email ke startoolsid@gmail.com dengan menyebutkan tipe perangkat dan masalah yang dialami.'],
+      nav_up: ['Updates', 'Pembaruan'],
+      nav_ft: ['Features', 'Fitur'],
+      nav_dl: ['Download', 'Unduh'],
+      nav_ct: ['Contact', 'Kontak']
+    };
+
+    var lang = 'en'; // bahasa bawaan: Inggris
+    try { var saved = localStorage.getItem('stools-lang'); if (saved === 'id' || saved === 'en') lang = saved; } catch (e) {}
+
+    function tr(key) { return D[key][lang === 'id' ? 1 : 0]; }
+
+    function applyLang() {
+      root.setAttribute('lang', lang);
+      document.title = tr('title');
+      document.querySelectorAll('[data-i]').forEach(function (el) { el.textContent = tr(el.getAttribute('data-i')); });
+      document.querySelectorAll('[data-ih]').forEach(function (el) { el.innerHTML = tr(el.getAttribute('data-ih')); });
+      document.querySelectorAll('.lang [data-l]').forEach(function (s) { s.classList.toggle('on', s.getAttribute('data-l') === lang); });
+      document.getElementById('themeBtn').setAttribute('aria-label', lang === 'id' ? 'Ganti tema' : 'Toggle theme');
+      document.getElementById('langBtn').setAttribute('aria-label', lang === 'id' ? 'Bahasa' : 'Language');
+    }
+
+    document.getElementById('langBtn').addEventListener('click', function () {
+      lang = lang === 'en' ? 'id' : 'en';
+      try { localStorage.setItem('stools-lang', lang); } catch (e) {}
+      applyLang();
+    });
+
+    /* ---------- Tema ---------- */
+    document.getElementById('themeBtn').addEventListener('click', function () {
+      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('stools-theme', next); } catch (e) {}
+    });
+
+    /* ---------- Garis kemajuan scroll ---------- */
+    var prog = document.getElementById('prog');
+    function onScroll() {
+      var h = document.documentElement;
+      var max = h.scrollHeight - h.clientHeight;
+      prog.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* ---------- Tandai unduhan sesuai perangkat ---------- */
+    var ua = navigator.userAgent || '';
+    var id = /Android/i.test(ua) ? 'card-android' : (/Windows/i.test(ua) ? 'card-windows' : null);
+    if (id) {
+      var card = document.getElementById(id);
+      card.classList.add('is-rec');
+      var badge = document.createElement('span');
+      badge.className = 'rec';
+      badge.setAttribute('data-i', 'rec');
+      card.insertBefore(badge, card.firstChild);
+    }
+
+    applyLang();
+
+    /* ---------- Bagikan ---------- */
+    var sb = document.getElementById('shareBtn');
+    var sm = document.getElementById('shareMsg');
+    sb.addEventListener('click', function () {
+      var data = { title: 'STools', text: 'STools', url: location.href };
+      if (navigator.share) {
+        navigator.share(data).catch(function () {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(location.href).then(function () {
+          sm.textContent = tr('copied');
+          setTimeout(function () { sm.textContent = ''; }, 2000);
+        }).catch(function () { sm.textContent = tr('copyaddr'); });
+      } else {
+        sm.textContent = tr('copyaddr');
+      }
+    });
+
+    /* ---------- Animasi muncul saat scroll ---------- */
     var targets = document.querySelectorAll('section .label, section h2, section .sub, .change, .box, .step, .notice, .dl, .link, .nita, details');
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -418,13 +684,11 @@
       el.style.transitionDelay = (Math.min(i, 5) * 70) + 'ms';
       io.observe(el);
     });
-
-    // Hapus delay setelah muncul supaya hover tetap responsif
     document.addEventListener('transitionend', function (e) {
       if (e.target.classList && e.target.classList.contains('in')) e.target.style.transitionDelay = '';
     });
 
-    // Highlight menu bawah sesuai bagian yang sedang dilihat
+    /* ---------- Menu bawah mengikuti bagian yang dilihat ---------- */
     var map = { update: 0, features: 1, install: 1, privacy: 1, download: 2, channels: 3, nita: 3, faq: 3 };
     var links = document.querySelectorAll('.nav a');
     var spy = new IntersectionObserver(function (entries) {
