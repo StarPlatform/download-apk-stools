@@ -129,6 +129,8 @@
   .sharebtn:hover { border-color: var(--blue); color: var(--blue); }
   .sharemsg { display: block; margin-top: 8px; font-size: 0.8rem; color: var(--green); min-height: 1.2em; }
 
+  .dlnote { display: block; margin-top: 8px; font-size: 0.75rem; color: var(--muted); }
+
   /* Links */
   .links { display: grid; gap: 10px; }
   @media (min-width: 560px) { .links.two { grid-template-columns: 1fr 1fr; } }
@@ -389,10 +391,10 @@ try {
         <div class="os wn"><svg class="bi"><use href="#b-win"/></svg></div>
         <h3 data-i="dw_h3">STools for Windows</h3>
         <p data-i="dw_p">Install on a PC or laptop. An internet connection is required.</p>
-        <div class="dl-meta"><span>Windows 10/11 (64-bit)</span><span>±80 MB</span><span>EXE</span></div>
+        <div class="dl-meta"><span>Windows 10/11 (64-bit)</span><span>±116 MB</span><span>EXE</span></div>
         <div class="smart" data-ih="dw_smart"><b>See a blue "Windows protected your PC" screen?</b> This is a built-in Windows check for new apps. Click <b>More info</b>, then <b>Run anyway</b>.</div>
-        <!-- GANTI href di bawah dengan link unduh .exe (misalnya link GitHub Releases) -->
-        <a href="STools-Setup-2.5.0.exe" class="btn" download data-i="dw_btn">Download for Windows</a>
+        <a href="https://www.mediafire.com/file/iqi7nuy5xd28qkv/STools-Setup-2.5.0.exe/file" class="btn" target="_blank" rel="noopener" data-i="dw_btn">Download for Windows</a>
+        <span class="dlnote" data-i="dw_note">Opens the MediaFire download page</span>
       </div>
     </div>
     <div class="share">
@@ -559,6 +561,7 @@ try {
       dw_p: ['Install on a PC or laptop. An internet connection is required.', 'Pasang pada PC atau laptop. Memerlukan koneksi internet.'],
       dw_smart: ['<b>See a blue "Windows protected your PC" screen?</b> This is a built-in Windows check for new apps. Click <b>More info</b>, then <b>Run anyway</b>.', '<b>Muncul layar biru "Windows protected your PC"?</b> Ini merupakan pemeriksaan bawaan Windows untuk aplikasi baru. Klik <b>More info</b>, lalu <b>Run anyway</b>.'],
       dw_btn: ['Download for Windows', 'Unduh untuk Windows'],
+      dw_note: ['Opens the MediaFire download page', 'Membuka halaman unduhan MediaFire'],
       share: ['Share STools with friends', 'Bagikan STools kepada teman'],
       rec: ['Suitable for your device', 'Sesuai dengan perangkat Anda'],
       copied: ['Link copied', 'Tautan disalin'],
